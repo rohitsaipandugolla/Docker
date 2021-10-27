@@ -1,0 +1,51 @@
+version: "3.1"
+services: 
+  frontend: 
+    container_name: frontend 
+    #image: srivyshnavikoduri/greencommute
+    build: ../greencommute_fe
+    ports: 
+     - "8080:80"
+  jobservice: 
+    #image: srivyshnavikoduri/greencommutejobservice
+    build: ./jobsService
+    ports: 
+     - "8082:8082"
+    depends_on: 
+      - postgresql 
+      - organizationservice
+    environment: 
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - ORGANIZATION_URL=organizationservice:8081
+    networks:
+      - local
+
+  postgresql:
+    container_name: postgresql
+    image: postgres
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    networks:
+      - local
+
+  organizationservice: 
+    container_name: organizationservice
+    build: ./organizationService
+    ports: 
+      - "8081:8081" 
+    depends_on:
+      - postgresql 
+    environment: 
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - local
+networks:
+  local:

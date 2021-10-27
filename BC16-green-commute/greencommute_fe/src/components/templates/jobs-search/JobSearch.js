@@ -501,9 +501,9 @@ const mapStateToProps = (state) => {
     jobs: state.jobReducer.jobs,
     advancedFilteredJobs: state.jobReducer.advancedFilteredJobs,
     advancedFilters: state.advancedFilters.filters,
-    userLocation: state.onBoardingFilter.yourLocation.yourLocation[0].city,
+    //userLocation: state.onBoardingFilter.yourLocation.yourLocation[0].city,
     skillValue: state.onBoardingFilter.skills.skills[0].skill,
-    jobLocation: state.onBoardingFilter.jobLocations.jobLocation[0].city,
+   // jobLocation: state.onBoardingFilter.jobLocations.jobLocation[0].city,
     savedJobs: state.jobReducer.savedJobs,
   };
 };
